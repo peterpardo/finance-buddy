@@ -19,9 +19,24 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/', [UserController::class, 'index'])->name('home');
 
     // Income and Expense View
-    Route::get('/income', [UserController::class, 'incomePage']);
-    Route::get('/expense', [UserController::class, 'expensePage']);
+    Route::get('/income/{id}', [UserController::class, 'incomePage']);
+    Route::get('/expense/{id}', [UserController::class, 'expensePage']);
 
     Route::post('/add-finance', [UserController::class, 'addFinance']);
+    Route::get('/fetch-income-pie/{id}', [UserController::class, 'fetchIncomePie']);
+    Route::get('/fetch-expense-pie/{id}', [UserController::class, 'fetchExpensePie']);
+    Route::get('/fetch-logs/{id}', [UserController::class, 'fetchLogs']);
+    Route::get('/fetch-income-logs/{id}', [UserController::class, 'fetchIncomeLogs']);
+    Route::post('/delete-finance/{id}', [UserController::class, 'deleteFinance']);
+
+    // Set Reminder View
+    Route::get('/set-reminder', [UserController::class, 'reminderPage']);
+    Route::post('/set-reminder', [UserController::class, 'setReminder']);
+
+    // Test Route
+    Route::get('/pie', [UserController::class, 'piePage']);
+    Route::get('/fetch-categories/{id}', [UserController::class, 'fetchCategories']);
+    Route::get('/send-sms', [UserController::class, 'smsPage']);
+    Route::post('/send-sms', [UserController::class, 'send']);
 });
 

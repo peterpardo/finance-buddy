@@ -4,8 +4,12 @@ const amount = document.getElementById('amount');
 const description = document.getElementById('description');
 const submitBtn = document.getElementById('submitBtn');
 const successAlert = document.getElementById('success-alert');
+const userID = document.getElementById('userID');
 
-// Form
+// Fetch Recent logs
+fetchLogs();
+
+// Add Finance Form
 submitBtn.addEventListener('click', () => {
     if(validateInputs()) {
         let data = {
@@ -26,14 +30,17 @@ submitBtn.addEventListener('click', () => {
         .then(response => response.json())
         .then(messages => {
             // Clear input fields
-            type.value = '';
+            type.value = 'income';
             category.value = '';
             amount.value = '';
             description.value = '';
             
             // Display success alert
             successAlert.classList.add('d-block');
-            successAlert.classList.remove('d-none');
+            successAlert.classList.remove('d-none')
+
+            // Fetch Updated logs
+            fetchLogs();
         });
     } else {
        console.log('Somehting is wrong');
@@ -90,4 +97,34 @@ const validateInputs = () => {
     }   
 
     return validated;
+}
+
+function fetchLogs() {
+    // Clear table body
+    const body = document.getElementById('table-body');
+    body.innerHTML = '';
+
+    fetch(`/fetch-logs/${userID.value}`, {
+        method: 'GET',
+        header: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+    })
+    .then(response => response.json())
+    .then(logs => {
+        for(let i = 0; i < logs.length; i++) {
+            // Format timestamp to readable format
+            let created_at = new Date(logs[i].created_at).toLocaleString();
+
+            const tr =  document.createElement('tr');
+            tr.innerHTML = `
+                <td class="fw-bold">${logs[i].category}</td>
+                <td class="text-muted">${logs[i].description}</td>
+                <td class="text-body">${created_at}</td>
+                <td class="${logs[i].type === 'income' ? 'text-success' : 'text-danger' }">${logs[i].amount}</td>
+            `;
+
+            body.appendChild(tr);
+        }
+    });
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="overflow-hidden">
     <div class="row vh-100 g-0">
-        <div class="col bg-secondary">
+        <div class="col d-sm-none d-md-block bg-secondary">
             <img src="https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
         </div>
         <div class="d-flex justify-content-center align-items-center col">
