@@ -6,10 +6,15 @@ use App\Models\Finance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
     public function index() {
+        // Get user records
+        $user = User::find(Auth::user()->id);
+        $finances = $user->finance()->orderBy('created_at', 'desc')->get(); 
+        
         $scripts = [
             asset('js/user/income-pie.js'),
             asset('js/user/expense-pie.js'),
@@ -18,28 +23,33 @@ class UserController extends Controller
 
         return view('index', [
             'scripts' => $scripts,
+            'finances' => $finances,
+            'totalIncome' => $finances->where('type', 'income')->sum('amount'),
+            'totalExpense' => $finances->where('type', 'expense')->sum('amount'),
         ]);
     }
 
     public function incomePage($id) {
         $user = User::find($id);
         $finances = $user->finance()->where('type', 'income')->get();
+        $categories = $user->finance()->select('category')->where('type', 'income')->distinct()->pluck('category');
         
         $scripts = [
             asset('js/user/income-pie.js'),
-            asset('js/user/delete-finance.js'),
         ];
 
         return view('user.finance-details', [
             'title' => 'My Income',
             'scripts' => $scripts,
-            'finances' => $finances
+            'finances' => $finances,
+            'categories' => $categories
         ]);
     }
 
     public function expensePage($id) {
         $user = User::find($id);
         $finances = $user->finance()->where('type', 'expense')->get();
+        $categories = $user->finance()->select('category')->where('type', 'expense')->distinct()->pluck('category');;
         
         $scripts = [
             asset('js/user/expense-pie.js'),
@@ -48,7 +58,8 @@ class UserController extends Controller
         return view('user.finance-details', [
             'title' => 'My Expenses',
             'scripts' => $scripts,
-            'finances' => $finances
+            'finances' => $finances,
+            'categories' => $categories
         ]);
     }
 
@@ -57,34 +68,20 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
         
         $user->finance()->create([
-            'type' => $request->typeValue,
-            'category' => $request->categoryValue,
-            'amount' => $request->amountValue,
-            'description' => $request->descriptionValue,
+            'type' => $request->type,
+            'category' => Str::title(trim($request->category)),
+            'amount' => $request->amount,
+            'description' => $request->description,
         ]);
         
-        return response([
-            'success' => 'Schedule successfully created.'
-        ]);
-    }
-
-    public function fetchIncomeLogs($id) {
-        $user = User::find($id);
-        $finances = $user->finance()->orderBy('created_at', 'desc')->where('type', 'income')->get();
-        $categories = $user->finance()->select('category')->where('type', 'income')->distinct()->get();
-
-        return [
-            $finances,
-            $categories,
-        ];
+        return back()->with('success', 'Record successfully created.');
     }
 
     public function deleteFinance($id) {
+        // Delete record
         Finance::destroy($id);
         
-        return response([
-            'success' => 'Record successfully deleted.'
-        ]);
+        return back()->with('success', 'Record successfully deleted');
     }
 
     public function fetchLogs($id) {
@@ -96,14 +93,39 @@ class UserController extends Controller
 
     public function fetchIncomePie($id) {
         $user = User::find($id);
-        $categories = $user->finance()->select('category', 'amount')->where('type', 'income')->distinct()->get();
-        return $categories;
+        $finances = $user->finance()->where('type', 'income')->get();
+
+        // Get Data for Pie Chart
+        $data = [];
+        foreach($finances as $finance) {
+            if(!array_key_exists($finance->category, $data)) {
+                $data[$finance->category] = $finance->amount; 
+            } else {
+                $data[$finance->category] = $data[$finance->category] + $finance->amount;
+            }
+        }
+
+        return $data;
     }
 
     public function fetchExpensePie($id) {
         $user = User::find($id);
-        $categories = $user->finance()->select('category', 'amount')->where('type', 'expense')->distinct()->get();
-        return $categories;
+        $finances = $user->finance()->where('type', 'expense')->get();
+
+        // Get Data for Pie Chart
+        $data = [];
+        foreach($finances as $finance) {
+            // $string = str_replace(' ', '_', $finance->category);
+            if(!array_key_exists($finance->category, $data)) {
+                // echo 'Unique: ' . $finance->category;
+                $data[$finance->category] = $finance->amount; 
+            } else {
+                // echo $finance->category . 'already exists.';
+                $data[$finance->category] = $data[$finance->category] + $finance->amount;
+            }
+        }
+
+        return $data;
     }
 
     // Reminder Page

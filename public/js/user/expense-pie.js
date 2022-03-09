@@ -13,10 +13,10 @@ function fetchExpensePie() {
         },
     })
     .then(response => response.json())
-    .then(categories => {
-        for(let i = 0; i < categories.length; i++) {
-            labels.push(categories[i].category);
-            amount.push(categories[i].amount);
+    .then(finance => {
+        for (const [key, value] of Object.entries(finance)) {
+            labels.push(key);
+            amount.push(value);
             backgroundColors.push(`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`)
         }
 

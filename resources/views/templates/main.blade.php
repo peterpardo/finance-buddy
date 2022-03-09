@@ -43,7 +43,7 @@
           </a>
           <ul class="dropdown-menu justify-content-end">
             <li><a class="dropdown-item justify-content-end" href="/set-reminder">Set Reminder</a></li>
-            <li><a class="dropdown-item justify-content-end" href="#">Upload CSV</a></li>
+            <li><a class="dropdown-item justify-content-end" href="#">Download Records</a></li>
             <li><a class="dropdown-item justify-content-end" href="#">My Account</a></li>
             <li>
               <a href="{{ route('logout') }}" class="dropdown-item"
