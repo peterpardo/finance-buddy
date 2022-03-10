@@ -26,15 +26,19 @@
 <body>
   {{-- Navigation Bar --}}
   @if(Auth::user())
-  <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="/">Finance Buddy</a>
+       
+       <img src="{{ asset('image/finance-buddy-logo.png') }}"
+            alt="Avatar Logo" style="width: 40px; height: 40px" class="rounded-pill mx-2" />
+      <a class="navbar-brand fw-lighter" href="/">Finance Buddy</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mynavbar">
         <ul class="navbar-nav me-auto"></ul>
         {{-- PC PART --}}
+
         <li class="nav-item dropdown d-flex justify-content-end d-none d-md-flex">
           <img
             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
@@ -43,7 +47,7 @@
             Auth::user()->first_name }}
           </a>
           <ul class="dropdown-menu justify-content-end">
-            <li><a class="dropdown-item justify-content-end" href="/set-reminder">Set Reminder</a></li>
+            <li><a class="dropdown-item justify-content-end" href="/set-reminder">Payment Reminder</a></li>
             <li><a class="dropdown-item justify-content-end" href="/download-records">Download Records</a></li>
             <li><a class="dropdown-item justify-content-end" href="#">My Account</a></li>
             <li>
@@ -61,15 +65,10 @@
         <li class="nav-item d-md-none d-flex">
           <div class="text-end w-100">
             <div class="d-flex justify-content-end w-100">
-            <img
-              src="https://images.pexels.com/photos/9365643/pexels-photo-9365643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="Avatar Logo" style="width: 40px; height: 40px" class="rounded-pill" />
-            <a class="nav-link text-white" href="#" role="button" >Hello, {{
-              Auth::user()->first_name }}
-            </a>
-          </div>
+            </div>
             <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/set-reminder">Set Reminder</a>
-            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/download-records">Download Records</a>
+            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/download-records">Download
+              Records</a>
             <a class="nav-link justify-content-end row text-white mx-2 my-2" href="#">My Account</a>
             <a href="{{ route('logout') }}" class="nav-link justify-content-end row text-white mx-2 my-2"
               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

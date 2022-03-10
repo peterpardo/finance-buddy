@@ -24,7 +24,7 @@ function fetchIncomePie() {
             datasets: [{
                 backgroundColor: backgroundColors,
                 data: amount,
-            }]
+            }],
         };
         
         const config = {
@@ -33,6 +33,7 @@ function fetchIncomePie() {
             options: {}
         };
 
+        Chart.defaults.font.size = 16;
         const myChart = new Chart(
             document.getElementById('incomeChart'),
             config

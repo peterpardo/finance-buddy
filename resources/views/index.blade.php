@@ -31,7 +31,7 @@
         </div>
         <div class="d-flex flex-column px-4 px-sm-5">
             <h4>₱{{ number_format($totalIncome - $totalExpense, 2) }}</h4>
-            <p>Total</p>
+            <p>Balance</p>
         </div>
     </div>
     <div class="d-flex justify-content-center my-3">

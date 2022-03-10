@@ -10,6 +10,12 @@
         <div class="d-flex justify-content-center align-items-center col-md-6">
             <form method="POST" action="{{ route('login') }}" style="width: 23rem;">
                 @csrf
+                <div class="d-flex flex-column justify-content-center align-items-center py-3">
+                <img src="{{ asset('image/finance-buddy-logo.png') }}"
+                    alt="Avatar Logo" style="width: 90px; height: 90px" class="rounded-pill d-flex justify-content-center" />
+                    <h2 class="fw-lighter">Finance Buddy</h2>
+                </div>
+              
                 <h1 class="fw-bold mt-5 mt-sm-0">Login Now</h1>
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
