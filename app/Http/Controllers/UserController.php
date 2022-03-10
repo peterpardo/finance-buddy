@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Finance;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use PDF;
 
@@ -140,14 +142,52 @@ class UserController extends Controller
         return $pdf->download(time().'-my-records.pdf');
     }
 
-
     // Reminder Page
     public function reminderPage() {
-        return view('user.reminder-page');
+        $user = User::find(Auth::user()->id);
+        $reminders = $user->reminders()->orderBy('created_at', 'desc')->orderBy('sent', 'asc')->get();
+        
+        return view('user.reminder-page', [
+            'reminders' => $reminders
+        ]);
     }
 
     public function setReminder(Request $request) {
-        dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'phone_number' => 'required|size:10',
+            'name' => 'required|string|max:10',
+            'amount' => 'required|numeric|',
+            'date' => 'required',       
+        ]);
+
+        // Validate date
+        $date = Carbon::parse($request->date . "00:00:00", 'Asia/Manila');
+        $dateValid = Carbon::today('Asia/Manila')->gte($date);
+
+        $validator->after(function ($validator) use ($dateValid) {
+            if ($dateValid) {
+                $validator->errors()->add(
+                    'date', 'Date should be set in advanced'
+                );
+            }
+        });
+
+        // Return if errors exists
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::find(Auth::user()->id);
+        $user->reminders()->create([
+            'name' => Str::title($request->name),
+            'number' => '63' . $request->phone_number,
+            'amount' => $request->amount,
+            'date' => $date,
+        ]);
+
+        return back()->with('success', 'Reminder successfully saved.');
     }
 
 
@@ -164,21 +204,27 @@ class UserController extends Controller
         return $categories;
     }
     public function smsPage() {
-        $basic  = new \Vonage\Client\Credentials\Basic("9b6de49c", "OGQVQ2BqfR1F4y32");
-        $client = new \Vonage\Client($basic);
+        $user = User::find(Auth::user()->id);
+        foreach($user->reminders()->get() as $reminder) {
+            // Check date if it's due
+            $date = Carbon::parse($reminder->date . "00:00:00", 'Asia/Manila');
+            $isDue = Carbon::today('Asia/Manila')->lt($date);
 
-        $response = $client->sms()->send(
-            new \Vonage\SMS\Message\SMS("639453175950", 'CYBER ACE', 'Yow, meron kang utang master, bayaran mo na')
-        );
-        
-        $message = $response->current();
-        
-        if ($message->getStatus() == 0) {
-            echo "The message was sent successfully\n";
-        } else {
-            echo "The message failed with status: " . $message->getStatus() . "\n";
+            //  Send SMS if it's true
+            if($isDue) {
+                // $basic  = new \Vonage\Client\Credentials\Basic("9b6de49c", "OGQVQ2BqfR1F4y32");
+                // $client = new \Vonage\Client($basic);
+
+                // $response = $client->sms()->send(
+                //     new \Vonage\SMS\Message\SMS($reminder->number, 'CYBER ACE', $reminder->name . ', pay ' . $reminder->amount . '.')
+                // );
+                
+                // $message = $response->current();
+                
+                $reminder->sent = 1;
+                $reminder->save();
+            }
         }
-
     }
     public function send(Request $request) {
       

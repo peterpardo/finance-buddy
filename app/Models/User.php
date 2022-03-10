@@ -46,4 +46,7 @@ class User extends Authenticatable
     public function finance() {
         return $this->hasMany(Finance::class, 'user_id', 'id');
     }
+    public function reminders() {
+        return $this->hasMany(Reminder::class, 'user_id', 'id');
+    }
 }

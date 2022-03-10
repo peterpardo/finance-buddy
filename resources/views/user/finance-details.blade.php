@@ -4,7 +4,7 @@
 {{-- User ID --}}
 <input type="hidden" id="userID" value="{{ Auth::user()->id }}">
 
-<div class="container px-4 m-auto">
+<div class="container mx-auto">
 {{-- Page title --}}
 <div class="container d-flex justify-content-center my-3">
     <h1>{{ $title }}</h1>
@@ -37,8 +37,8 @@
 
     <div class="col-md-6 p-0">
         {{-- Categories --}}
-        <h3>Categories</h3>
-        <div class="d-flex flex-wrap align-items-center justify-content-start" id="category-container">
+        <h3 class="container">Categories</h3>
+        <div class="container d-flex flex-row d-sm-flex flex-sm-col" id="category-container">
             @foreach($categories as $category)
                 <div class="border border-success text-center text-success p-2 rounded-pill mx-2 my-1" style="width:18rem;">
                     {{ $category }}
@@ -47,7 +47,7 @@
         </div>
 
         {{-- Finance Logs --}}
-        <div>
+        <div class="container d-flex flex-column justify-content-center ">
             <h3 class="mt-3">Recent Logs</h3>
             <div class="border border-dark rounded my-3">
                 <table class="table text-center align-middle">

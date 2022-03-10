@@ -34,7 +34,8 @@
       </button>
       <div class="collapse navbar-collapse" id="mynavbar">
         <ul class="navbar-nav me-auto"></ul>
-        <li class="nav-item dropdown d-flex justify-content-end">
+        {{-- PC PART --}}
+        <li class="nav-item dropdown d-flex justify-content-end d-none d-md-flex">
           <img
             src="https://images.pexels.com/photos/9365643/pexels-photo-9365643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Avatar Logo" style="width: 40px; height: 40px" class="rounded-pill" />
@@ -55,6 +56,29 @@
               </form>
             </li>
           </ul>
+        </li>
+        {{-- MOBILE PART --}}
+        <li class="nav-item d-md-none d-flex">
+          <div class="text-end w-100">
+            <div class="d-flex justify-content-end w-100">
+            <img
+              src="https://images.pexels.com/photos/9365643/pexels-photo-9365643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              alt="Avatar Logo" style="width: 40px; height: 40px" class="rounded-pill" />
+            <a class="nav-link text-white" href="#" role="button" >Hello, {{
+              Auth::user()->first_name }}
+            </a>
+          </div>
+            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/set-reminder">Set Reminder</a>
+            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/download-records">Download Records</a>
+            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="#">My Account</a>
+            <a href="{{ route('logout') }}" class="nav-link justify-content-end row text-white mx-2 my-2"
+              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              Logout
+            </a>
+          </div>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+            @csrf
+          </form>
         </li>
       </div>
     </div>

@@ -6,17 +6,16 @@
 
 {{-- Success alert --}}
 @if(session('success'))
-    <div class="container mt-3 alert alert-dismissible alert-success d-flex align-items-center fade show" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" style="width:2rem; height:2rem;" class="me-2"
-            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <div>
-            {{ session('success') }}
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container mt-3 alert alert-dismissible alert-success d-flex align-items-center fade show" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width:2rem; height:2rem;" class="me-2" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <div>
+        {{ session('success') }}
     </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
 
 <div class="container postion-relative p-sm-3">
@@ -45,10 +44,10 @@
     </div>
 
     {{-- Pie Graphs --}}
-    <div id="carouselExampleControls" class="carousel slide w-50 mx-auto carousel-dark" data-bs-ride="carousel">
+    <div id="carouselExampleControls" class="carousel slide col col-md-7 mx-auto mx-auto carousel-dark" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <div class="w-75 mx-auto">
+                <div class="w-75 w mx-auto">
                     <canvas id="incomeChart"></canvas>
                 </div>
                 <div class="text-center">
@@ -85,20 +84,20 @@
             <thead class="mt-2"></thead>
             <tbody id="table-body">
                 @foreach($finances as $finance)
-                    <tr>
-                        <td class="fw-bold">{{ $finance->category }}</td>
-                        <td class="text-muted">{{ $finance->description }}</td>
-                        <td class="text-body">{{ Carbon\Carbon::parse($finance->created_at)->format('M j, Y (D)') }}</td>
-                        @if($finance->type === 'income')
-                            <td class="text-success">
-                                ₱{{ number_format($finance->amount, 2) }}
-                            </td>
-                        @else
-                            <td class="text-danger">
-                                ₱{{ number_format($finance->amount, 2) }}
-                            </td>
-                        @endif
-                    </tr>
+                <tr>
+                    <td class="fw-bold">{{ $finance->category }}</td>
+                    <td class="text-muted">{{ $finance->description }}</td>
+                    <td class="text-body">{{ Carbon\Carbon::parse($finance->created_at)->format('M j, Y (D)') }}</td>
+                    @if($finance->type === 'income')
+                    <td class="text-success">
+                        ₱{{ number_format($finance->amount, 2) }}
+                    </td>
+                    @else
+                    <td class="text-danger">
+                        ₱{{ number_format($finance->amount, 2) }}
+                    </td>
+                    @endif
+                </tr>
                 @endforeach
             </tbody>
         </table>

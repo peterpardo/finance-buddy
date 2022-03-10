@@ -40,6 +40,6 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/pie', [UserController::class, 'piePage']);
     Route::get('/fetch-categories/{id}', [UserController::class, 'fetchCategories']);
     Route::get('/send-sms', [UserController::class, 'smsPage']);
-    Route::post('/send-sms', [UserController::class, 'send']);
+    // Route::post('/send-sms', [UserController::class, 'send']);
 });
 
