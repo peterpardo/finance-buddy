@@ -34,11 +34,12 @@ class UserController extends Controller
 
     public function incomePage($id) {
         $user = User::find($id);
-        $finances = $user->finance()->where('type', 'income')->get();
+        $finances = $user->finance()->orderBy('updated_at', 'desc')->where('type', 'income')->get();
         $categories = $user->finance()->select('category')->where('type', 'income')->distinct()->pluck('category');
         
         $scripts = [
             asset('js/user/income-pie.js'),
+            asset('js/user/edit-finance.js'),
         ];
 
         return view('user.finance-details', [
@@ -51,11 +52,12 @@ class UserController extends Controller
 
     public function expensePage($id) {
         $user = User::find($id);
-        $finances = $user->finance()->where('type', 'expense')->get();
+        $finances = $user->finance()->orderBy('updated_at', 'desc')->where('type', 'expense')->get();
         $categories = $user->finance()->select('category')->where('type', 'expense')->distinct()->pluck('category');;
         
         $scripts = [
             asset('js/user/expense-pie.js'),
+            asset('js/user/edit-finance.js'),
         ];
 
         return view('user.finance-details', [
@@ -92,6 +94,19 @@ class UserController extends Controller
         $finances = $user->finance()->orderBy('created_at', 'desc')->get();
 
         return $finances;
+    }
+
+    public function editFinance(Request $request, $id) {
+        $finance = Finance::find($id);
+
+        // Update values
+        $finance->type = $request->type;
+        $finance->category = $request->category;
+        $finance->amount = $request->amount;
+        $finance->description = $request->description;
+        $finance->save();
+
+        return back()->with('success', 'Record successfully updated.');
     }
 
     public function fetchIncomePie($id) {

@@ -1,19 +1,33 @@
+const editBtns = document.querySelectorAll('.editBtns');
 const type = document.getElementById('type');
 const category = document.getElementById('category');
 const amount = document.getElementById('amount');
 const description = document.getElementById('description');
+const editForm = document.getElementById('edit-finance-form');
 const submitBtn = document.getElementById('submitBtn');
-const successAlert = document.getElementById('success-alert');
-const userID = document.getElementById('userID');
-const form = document.getElementById('add-finance-form');
+let id = ''; 
 
-// Fetch Recent logs
-// fetchLogs();
+// Get values of the edited record
+editBtns.forEach((editBtn) => {
+    editBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // console.log(e.target.dataset.financeId);
+        type.value = e.target.dataset.type;
+        category.value = e.target.dataset.category;
+        amount.value = e.target.dataset.amount;
+        description.value = e.target.dataset.description;
+        id = e.target.dataset.financeId;
+    });
+})
 
-// Add Finance Form
-submitBtn.addEventListener('click', () => {
+
+// Submit Edit Finance Form
+submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     if(validateInputs()) {
-        form.submit();
+        // Update action attribute of form
+        editForm.setAttribute('action', `/edit-finance/${id}`)
+        editForm.submit();
     }
 });
 
@@ -67,34 +81,4 @@ const validateInputs = () => {
     }   
 
     return validated;
-}
-
-function fetchLogs() {
-    // Clear table body
-    const body = document.getElementById('table-body');
-    body.innerHTML = '';
-
-    fetch(`/fetch-logs/${userID.value}`, {
-        method: 'GET',
-        header: {
-            'Content-Type': 'application/json;charset=utf-8',
-        },
-    })
-    .then(response => response.json())
-    .then(logs => {
-        for(let i = 0; i < logs.length; i++) {
-            // Format timestamp to readable format
-            let created_at = new Date(logs[i].created_at).toLocaleString();
-
-            const tr =  document.createElement('tr');
-            tr.innerHTML = `
-                <td class="fw-bold">${logs[i].category}</td>
-                <td class="text-muted">${logs[i].description}</td>
-                <td class="text-body">${created_at}</td>
-                <td class="${logs[i].type === 'income' ? 'text-success' : 'text-danger' }">₱${logs[i].amount}</td>
-            `;
-
-            body.appendChild(tr);
-        }
-    });
 }

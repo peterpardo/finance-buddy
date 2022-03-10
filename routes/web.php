@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/fetch-logs/{id}', [UserController::class, 'fetchLogs']);
     Route::get('/fetch-income-logs/{id}', [UserController::class, 'fetchIncomeLogs']);
     Route::post('/delete-finance/{id}', [UserController::class, 'deleteFinance']);
+    Route::post('/edit-finance/{id}', [UserController::class, 'editFinance']);
 
     // Generate Records
     Route::get('/download-records', [UserController::class, 'downloadRecords']);

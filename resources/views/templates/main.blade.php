@@ -37,7 +37,7 @@
         {{-- PC PART --}}
         <li class="nav-item dropdown d-flex justify-content-end d-none d-md-flex">
           <img
-            src="https://images.pexels.com/photos/9365643/pexels-photo-9365643.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
             alt="Avatar Logo" style="width: 40px; height: 40px" class="rounded-pill" />
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Hello, {{
             Auth::user()->first_name }}

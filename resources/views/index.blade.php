@@ -48,7 +48,13 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="w-75 w mx-auto">
-                    <canvas id="incomeChart"></canvas>
+                    @if($finances->where('type', 'income')->count() <= 0)
+                        <div class="d-flex justify-content-center align-items-center text-center fs-6 rounded p-5 w-100" style="height:565px;">
+                            <p class="fw-bold fs-5">No records yet</p>
+                        </div>
+                    @else
+                        <canvas id="incomeChart"></canvas>
+                    @endif
                 </div>
                 <div class="text-center">
                     <h5>Income</h5>
@@ -57,7 +63,13 @@
             </div>
             <div class="carousel-item">
                 <div class="w-75 mx-auto">
-                    <canvas id="expenseChart"></canvas>
+                    @if($finances->where('type', 'expense')->count() <= 0)
+                        <div class="d-flex justify-content-center align-items-center text-center fs-6 rounded p-5 w-100" style="height:565px;">
+                            <p class="fw-bold fs-5">No records yet</p>
+                        </div>
+                    @else
+                        <canvas id="expenseChart"></canvas>
+                    @endif
                 </div>
                 <div class="text-center">
                     <h5>Expenses</h5>
@@ -80,27 +92,31 @@
     {{-- Recent Logs --}}
     <div class="w-75 m-auto">
         <h3>Recent Logs</h3>
-        <table class="table text-center">
-            <thead class="mt-2"></thead>
-            <tbody id="table-body">
-                @foreach($finances as $finance)
-                <tr>
-                    <td class="fw-bold">{{ $finance->category }}</td>
-                    <td class="text-muted">{{ $finance->description }}</td>
-                    <td class="text-body">{{ Carbon\Carbon::parse($finance->created_at)->format('M j, Y (D)') }}</td>
-                    @if($finance->type === 'income')
-                    <td class="text-success">
-                        ₱{{ number_format($finance->amount, 2) }}
-                    </td>
-                    @else
-                    <td class="text-danger">
-                        ₱{{ number_format($finance->amount, 2) }}
-                    </td>
-                    @endif
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        @if($finances->count() <= 0)
+            <div class="text-center bg-light fs-6 rounded p-5">No records yet</div>
+        @else
+            <table class="table text-center">
+                <thead class="mt-2"></thead>
+                <tbody id="table-body">
+                    @foreach($finances as $finance)
+                    <tr>
+                        <td class="fw-bold">{{ $finance->category }}</td>
+                        <td class="text-muted">{{ $finance->description }}</td>
+                        <td class="text-body">{{ Carbon\Carbon::parse($finance->updated_at)->format('M j, Y (D)') }}</td>
+                        @if($finance->type === 'income')
+                        <td class="text-success">
+                            ₱{{ number_format($finance->amount, 2) }}
+                        </td>
+                        @else
+                        <td class="text-danger">
+                            ₱{{ number_format($finance->amount, 2) }}
+                        </td>
+                        @endif
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 
 
