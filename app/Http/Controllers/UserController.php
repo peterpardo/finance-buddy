@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use PDF;
 
 class UserController extends Controller
 {
@@ -127,6 +128,18 @@ class UserController extends Controller
 
         return $data;
     }
+
+    public function downloadRecords() {
+        $user = User::find(Auth::user()->id);
+        $data = [
+            'incomes' => $user->finance()->orderBy('created_at', 'desc')->where('type', 'income')->get(),
+            'expenses' => $user->finance()->orderBy('created_at', 'desc')->where('type', 'expense')->get(),
+        ];
+
+        $pdf = PDF::loadView('pdf.records', $data);
+        return $pdf->download(time().'-my-records.pdf');
+    }
+
 
     // Reminder Page
     public function reminderPage() {

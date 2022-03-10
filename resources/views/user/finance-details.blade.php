@@ -59,11 +59,11 @@
                                 <td class="text-body">{{ $finance->created_at->format('M j, Y (D)') }}</td>
                                 @if($finance->type === 'income')
                                     <td class="text-success">
-                                        {{ $finance->amount }}
+                                        ₱{{ $finance->amount }}
                                     </td>
                                 @else
                                     <td class="text-danger">
-                                        {{ $finance->amount }}
+                                        ₱{{ $finance->amount }}
                                     </td>
                                 @endif
                                 <td>
