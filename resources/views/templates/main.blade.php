@@ -66,7 +66,7 @@
           <div class="text-end w-100">
             <div class="d-flex justify-content-end w-100">
             </div>
-            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/set-reminder">Set Reminder</a>
+            <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/set-reminder">Payment Reminder</a>
             <a class="nav-link justify-content-end row text-white mx-2 my-2" href="/download-records">Download
               Records</a>
             <a class="nav-link justify-content-end row text-white mx-2 my-2" href="#">My Account</a>
