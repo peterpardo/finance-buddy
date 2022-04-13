@@ -20,15 +20,8 @@
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Emailsss</label>
-                    blue is the color of red and
-                    green is the color of black
-                    red of red
-                    dasd the adas
-                    yellow
-                    black
-
-
-                    asd
+                    {{-- New line --}}
+                    New Line
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
                     @error('email')
