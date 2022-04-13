@@ -20,8 +20,8 @@
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Emailsss</label>
-                    blue
-                    green
+                    blue is the color of blue
+                    green is the color of green
                     red
                     yellow
                     black
