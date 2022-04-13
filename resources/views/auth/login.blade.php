@@ -26,6 +26,8 @@
                     dasd the adas
                     yellow
                     black
+
+
                     asd
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
