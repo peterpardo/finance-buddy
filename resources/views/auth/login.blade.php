@@ -20,6 +20,7 @@
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Emailsss</label>
+<<<<<<< HEAD
                     blue is the color of red and
                     green is the color of black
                     red of red
@@ -29,6 +30,10 @@
                     test
 
                     asd
+=======
+                    {{-- New line --}}
+                    New Line
+>>>>>>> 082e8e91ad6aac85dae46424687e887672ec16cb
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
                     @error('email')
