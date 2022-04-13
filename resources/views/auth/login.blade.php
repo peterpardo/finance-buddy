@@ -16,10 +16,10 @@
                     <h2 class="fw-lighter">Finance Buddy</h2>
                 </div>
               
-                <h1 class="fw-bold mt-5 mt-sm-0">Login Now</h1>
+                <h1 class="fw-bold mt-5 mt-sm-0">Login Nowwewew</h1>
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Email</label>
+                    <label for="email" class="form-label fw-bold">Emailsss</label>
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
                     @error('email')
