@@ -15,11 +15,14 @@
                     alt="Avatar Logo" style="width: 90px; height: 90px" class="rounded-pill d-flex justify-content-center" />
                     <h2 class="fw-lighter">Finance Buddy</h2>
                 </div>
-              
+
                 <h1 class="fw-bold mt-5 mt-sm-0">Login Nowwewew</h1>
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Emailsss</label>
+                    red
+                    blue
+                    green
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
                     @error('email')

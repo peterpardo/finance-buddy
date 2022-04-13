@@ -21,14 +21,14 @@ class ReminderSeeder extends Seeder
             'name' => 'Bill',
             'number' => '639453175950',
             'amount' => 100,
-            'sent' => 0,
+            'sent' => 1,
             'date' => '2022-03-10'
         ]);
         $user->reminders()->create([
             'name' => 'Smith',
             'number' => '639453175950',
             'amount' => 50,
-            'sent' => 0,
+            'sent' => 1,
             'date' => '2022-03-9'
         ]);
         $user->reminders()->create([

@@ -51,7 +51,7 @@
                 <h6 class="fw-bold">Phone Number</h6>
                 <input name="phone_number"
                     class="form-control pe-3 rounded-end @error('phone_number') is-invalid @enderror" type="number"
-                    placeholder="e.g. 9453175950" value="9453175950" />
+                    placeholder="e.g. 9453175950" value="{{ old('phone_number') }}" />
                 @error('phone_number')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
                 @enderror
