@@ -26,7 +26,7 @@
                     dasd the adas
                     yellow
                     black
-
+                    test
 
                     asd
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
