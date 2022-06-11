@@ -20,7 +20,8 @@
                 <p class="text-secondary">Please enter your email</p>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Emailsss</label>
-                    Added this line
+                    {{-- New line --}}
+                    New Line
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         id="email" aria-describedby="email" placeholder="Enter your email">
                     @error('email')
